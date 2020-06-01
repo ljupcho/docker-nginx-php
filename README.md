@@ -5,6 +5,7 @@ Create new folder and in it:
 - copy your id_rsa and id_rsa.pub ssh keys to the folder php-fpm/ssh/ if your application requires other packages from your git <br/>
 <br/>
 You may go through the .env parameters of this docker app and change to your preference, at the moment this will run on php7.4 and will also run for the consumers that will be kept alive using supervisor for your laravel queues. <br/>
+Also if any changes are done to the Dockerfile you will need to run: docker-compose up -d --build <br/>
 
 
 
