@@ -237,7 +237,7 @@ ARG INSTALL_ZIP_ARCHIVE=false
 
 RUN if [ ${INSTALL_ZIP_ARCHIVE} = true ]; then \
     apt-get install libzip-dev -y && \
-    docker-php-ext-configure zip --with-libzip && \
+    docker-php-ext-configure zip && \
     # Install the zip extension
     docker-php-ext-install zip \
 ;fi
