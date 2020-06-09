@@ -43,6 +43,9 @@ services:
           - WORK_DIR=${APP_CODE_WEB_PATH_CONTAINER}
           - NODE_VERSION=${NODE_VERSION}
       container_name: rb_web
+      environment:
+        XDEBUG_CONFIG: "remote_host=host.docker.internal"
+        PHP_IDE_CONFIG: "serverName=localhost"
       volumes:
         - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
         - ./php-fpm/cron/crontab_web:/etc/crontab
@@ -75,8 +78,8 @@ services:
           - INSTALL_SUPERVISOR=${PHP_FPM_INSTALL_SUPERVISOR}
       container_name: rb_consumers
       volumes:
-        - ./php-fpm/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
-        - ./php-fpm/supervisor/web.conf:/etc/supervisor/conf.d/web.conf
+        - ./php-fpm-consumers/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
+        - ./php-fpm-consumers/supervisor/web.conf:/etc/supervisor/conf.d/web.conf
         - ${APP_CODE_WEB_PATH_HOST}:${APP_CODE_WEB_PATH_CONTAINER}
       expose:
         - "9000"
