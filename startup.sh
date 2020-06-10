@@ -31,6 +31,7 @@ docker-compose exec web php artisan storage:link
 "scripts/clearCacheWeb.sh"
 docker-compose exec web chmod -R 777 storage
 # Installing the WEB FE code
+docker-compose exec web npm install
 "scripts/updateNpmDevWeb.sh"
 
 # after all set and done run the consumers
