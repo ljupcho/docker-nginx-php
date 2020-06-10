@@ -13,7 +13,7 @@ docker-compose up -d --scale consumers=0
 # docker-compose exec web git checkout master
 docker-compose exec web cp .env.example .env
 # Update WEB env variables
-docker-compose exec web sed -i 's/APP_DEBUG=.*/APP_DEBUG=false/' .env
+docker-compose exec web sed -i 's/APP_DEBUG=.*/APP_DEBUG=true/' .env
 docker-compose exec web sed -i 's/APP_URL=.*/APP_URL=http:\/\/localhost:8081\//' .env
 docker-compose exec web sed -i 's/DB_DATABASE=.*/DB_DATABASE=web/' .env
 docker-compose exec web sed -i 's/DB_HOST=.*/DB_HOST=db/' .env
