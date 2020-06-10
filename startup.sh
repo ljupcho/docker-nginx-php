@@ -21,7 +21,7 @@ docker-compose exec web sed -i 's/DB_USERNAME=.*/DB_USERNAME=root/' .env
 docker-compose exec web sed -i 's/DB_PASSWORD=.*/DB_PASSWORD=root/' .env
 docker-compose exec web sed -i 's/REDIS_HOST=.*/REDIS_HOST=redis/' .env
 # Installing the WEB code
-docker-compose exec web composer update --no-interaction
+docker-compose exec web php -d memory_limit=-1 /usr/local/bin/composer update --no-interaction
 "scripts/clearCacheWeb.sh"
 docker-compose exec web php artisan key:generate
 docker-compose exec web php artisan storage:link
