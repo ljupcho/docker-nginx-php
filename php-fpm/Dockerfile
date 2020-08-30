@@ -694,8 +694,8 @@ RUN if [ ${INSTALL_SQLITE} = true ]; then \
 ###########################################################################
 # VIM && NANO EDITORS:
 ###########################################################################
-apt-get update -yqq 
-apt-get -y install vim nano
+RUN apt-get update -yqq 
+RUN apt-get -y install vim nano
 
 
 ###########################################################################
