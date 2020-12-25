@@ -4,7 +4,7 @@ services:
     nginx:
       build:
         context: ./nginx
-      container_name: rb_nginx
+      container_name: php_nginx
       volumes:
         - ${APP_CODE_WEB_PATH_HOST}:${APP_CODE_WEB_PATH_CONTAINER}
         - ${NGINX_WEB_HOST_LOG_PATH}:/var/log/nginx
@@ -42,7 +42,7 @@ services:
           - INSTALL_XDEBUG=${PHP_FPM_INSTALL_XDEBUG}
           - WORK_DIR=${APP_CODE_WEB_PATH_CONTAINER}
           - NODE_VERSION=${NODE_VERSION}
-      container_name: rb_web
+      container_name: php_web
       environment:
         XDEBUG_CONFIG: "remote_host=host.docker.internal"
         PHP_IDE_CONFIG: "serverName=localhost"
@@ -76,7 +76,7 @@ services:
           - INSTALL_IMAGEMAGICK=${PHP_FPM_INSTALL_IMAGEMAGICK}
           - INSTALL_BCMATH=${PHP_FPM_INSTALL_BCMATH}
           - INSTALL_SUPERVISOR=${PHP_FPM_INSTALL_SUPERVISOR}
-      container_name: rb_consumers
+      container_name: php_consumers
       volumes:
         - ./php-fpm-consumers/php${PHP_VERSION}.ini:/usr/local/etc/php/php.ini
         - ./php-fpm-consumers/supervisor/web.conf:/etc/supervisor/conf.d/web.conf
@@ -94,7 +94,7 @@ services:
         context: ./mysql
         args:
           - MYSQL_VERSION=${MYSQL_VERSION}
-      container_name: rb_db
+      container_name: php_db
       environment:
         - MYSQL_DATABASE=${MYSQL_DATABASE}
         - MYSQL_USER=${MYSQL_USER}
@@ -111,7 +111,7 @@ services:
 
     redis:
       build: ./redis
-      container_name: rb_redis
+      container_name: php_redis
       volumes:
         - ${DATA_PATH_HOST}/redis:/data
       ports:

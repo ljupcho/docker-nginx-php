@@ -1,22 +1,4 @@
-#
-#--------------------------------------------------------------------------
-# Image Setup
-#--------------------------------------------------------------------------
-#
-# To edit the 'php-fpm' base Image, visit its repository on Github
-#    https://github.com/Laradock/php-fpm
-#
-# To change its version, see the available Tags on the Docker Hub:
-#    https://hub.docker.com/r/laradock/php-fpm/tags/
-#
-# Note: Base Image name format {image-tag}-{php-version}
-#
-
-ARG LARADOCK_PHP_VERSION
-
-FROM laradock/php-fpm:2.6.2-${LARADOCK_PHP_VERSION}
-
-LABEL maintainer="Mahmoud Zalt <mahmoud@zalt.me>"
+FROM php:8.0-fpm
 
 ARG LARADOCK_PHP_VERSION
 
@@ -28,6 +10,7 @@ RUN apt-get update -yqq && \
     apt-get install -y apt-utils && \
     pecl channel-update pecl.php.net
 
+RUN docker-php-ext-install mysqli pdo pdo_mysql    
 #
 #--------------------------------------------------------------------------
 # Mandatory Software's Installation

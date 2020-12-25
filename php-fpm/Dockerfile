@@ -1,22 +1,4 @@
-#
-#--------------------------------------------------------------------------
-# Image Setup
-#--------------------------------------------------------------------------
-#
-# To edit the 'php-fpm' base Image, visit its repository on Github
-#    https://github.com/Laradock/php-fpm
-#
-# To change its version, see the available Tags on the Docker Hub:
-#    https://hub.docker.com/r/laradock/php-fpm/tags/
-#
-# Note: Base Image name format {image-tag}-{php-version}
-#
-
-ARG LARADOCK_PHP_VERSION
-
-FROM laradock/php-fpm:2.6.2-${LARADOCK_PHP_VERSION}
-
-LABEL maintainer="Mahmoud Zalt <mahmoud@zalt.me>"
+FROM php:8.0-fpm
 
 ARG LARADOCK_PHP_VERSION
 
@@ -28,6 +10,7 @@ RUN apt-get update -yqq && \
     apt-get install -y apt-utils && \
     pecl channel-update pecl.php.net
 
+RUN docker-php-ext-install mysqli pdo pdo_mysql    
 #
 #--------------------------------------------------------------------------
 # Mandatory Software's Installation
@@ -697,29 +680,11 @@ RUN if [ ${INSTALL_SQLITE} = true ]; then \
 RUN apt-get update -yqq 
 RUN apt-get -y install vim nano
 
-
-###########################################################################
-# SSH KEYS:
-###########################################################################
-COPY ./ssh/config /root/.ssh/
-COPY ./ssh/id_rsa /root/.ssh/
-COPY ./ssh/id_rsa.pub /root/.ssh/
-
-RUN chmod 644 ~/.ssh/config
-RUN chmod 600 ~/.ssh/id_rsa
-RUN chmod 644 ~/.ssh/id_rsa.pub
-
 ###########################################################################
 # Check PHP version:
 ###########################################################################
 
 RUN php -v | head -n 1 | grep -q "PHP ${LARADOCK_PHP_VERSION}."
-
-#
-#--------------------------------------------------------------------------
-# Final Touch
-#--------------------------------------------------------------------------
-#
 
 ARG WORK_DIR=/var/www
 
@@ -735,14 +700,8 @@ RUN apt-get clean && \
 
 RUN usermod -u 1000 www-data
 
-# Adding the faketime library to the preload file needs to be done last
-# otherwise it will preload it for all commands that follow in this file
-RUN if [ ${INSTALL_FAKETIME} = true ]; then \
-    echo "/usr/lib/x86_64-linux-gnu/faketime/libfaketime.so.1" > /etc/ld.so.preload \
-;fi
-
 WORKDIR ${WORK_DIR}
 
 CMD ["php-fpm"]
 
-EXPOSE 9000
+EXPOSE 9000    
