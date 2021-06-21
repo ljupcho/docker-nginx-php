@@ -681,6 +681,17 @@ RUN apt-get update -yqq
 RUN apt-get -y install vim nano
 
 ###########################################################################
+# SSH KEYS:
+###########################################################################
+COPY ./ssh/config /root/.ssh/
+COPY ./ssh/id_rsa /root/.ssh/
+COPY ./ssh/id_rsa.pub /root/.ssh/
+
+RUN chmod 644 ~/.ssh/config
+RUN chmod 600 ~/.ssh/id_rsa
+RUN chmod 644 ~/.ssh/id_rsa.pub
+
+###########################################################################
 # Check PHP version:
 ###########################################################################
 
